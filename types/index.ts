@@ -52,10 +52,19 @@ export interface TranslationStrings {
     shareIdea: string;
     addToFavorites: string;
     removeFromFavorites: string;
+    shareViaTelegram: string;
+    shareViaWhatsapp: string;
+    shareViaTwitter: string;
   };
   stats: {
     totalIdeas: string;
     currentIdea: string;
     inFavorites: string;
   };
-} 
+  form: {
+    authorName: string;
+  };
+}
+export type Translations = {
+  [key in Language]: TranslationStrings;
+};

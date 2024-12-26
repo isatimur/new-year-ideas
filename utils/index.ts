@@ -1,4 +1,5 @@
 import confetti from 'canvas-confetti';
+import { Share2, MessageCircle, Send } from 'lucide-react';
 import type { Idea, Language } from '@/types';
 
 export function generateConfetti(options?: {
@@ -21,8 +22,29 @@ export function generateConfetti(options?: {
   });
 }
 
-export function shareIdea(idea: Idea, lang: Language) {
-  const shareText = `Check out this New Year's celebration idea: ${idea.title[lang]} - ${idea.description[lang]}`;
-  const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
+export const shareServices = {
+  twitter: {
+    name: 'Twitter',
+    icon: Share2,
+    getUrl: (text: string) => `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`,
+    className: 'bg-blue-500 hover:bg-blue-600'
+  },
+  telegram: {
+    name: 'Telegram',
+    icon: Send,
+    getUrl: (text: string) => `https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(text)}`,
+    className: 'bg-[#0088cc] hover:bg-[#0077b5]'
+  },
+  whatsapp: {
+    name: 'WhatsApp',
+    icon: MessageCircle,
+    getUrl: (text: string) => `https://wa.me/?text=${encodeURIComponent(text)}`,
+    className: 'bg-[#25D366] hover:bg-[#128C7E]'
+  }
+};
+
+export function shareIdea(idea: Idea, lang: Language, service: keyof typeof shareServices = 'twitter') {
+  const shareText = `${idea.title[lang]}\n\n${idea.description[lang]}`;
+  const shareUrl = shareServices[service].getUrl(shareText);
   window.open(shareUrl, '_blank');
-} 
+}

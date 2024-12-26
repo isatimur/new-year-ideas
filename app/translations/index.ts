@@ -1,7 +1,9 @@
-export const translations = {
+import { Translations } from "@/types";
+
+export const translations: Translations = {
     ru: {
-        title: "Волшебный генератор новогодних идей",
-        subtitle: "Генерируйте новые идеи для Нового года",
+        title: "Генератор новогодних идей",
+        subtitle: "Найдите креативные способы встретить Новый год",
         difficulty: "Сложность",
         cost: "Стоимость",
         funFactor: "Веселье",
@@ -27,21 +29,18 @@ export const translations = {
             previousIdea: "Предыдущая идея",
             nextIdea: "Следующая идея",
             newIdea: "Новая идея",
-            addIdea: "Добавить свою идею",
-            hideForm: "Скрыть форму",
             share: "Поделиться",
             shareIdea: "Поделиться идеей",
             favorite: "В избранное",
             inFavorites: "В избранном",
             addToFavorites: "Добавить в избранное",
-            removeFromFavorites: "Удалить из избранного"
+            removeFromFavorites: "Удалить из избранного",
+            shareViaTelegram: "Поделиться в Telegram",
+            shareViaWhatsapp: "Поделиться в WhatsApp",
+            shareViaTwitter: "Поделиться в Twitter",
         },
         form: {
-            title: "Добавить новую идею",
-            ideaTitle: "Название идеи",
-            description: "Описание",
             authorName: "Ваше имя",
-            submit: "Добавить идею"
         },
         stats: {
             totalIdeas: "Всего идей",
@@ -51,8 +50,8 @@ export const translations = {
         loading: "Генерация магии..."
     },
     en: {
-        title: "Magic New Year's Ideas Generator",
-        subtitle: "Generate new ideas for the New Year",
+        title: "New Year's Ideas Generator",
+        subtitle: "Find creative ways to celebrate New Year",
         difficulty: "Difficulty",
         cost: "Cost",
         funFactor: "Fun Factor",
@@ -78,21 +77,18 @@ export const translations = {
             previousIdea: "Previous Idea",
             nextIdea: "Next Idea",
             newIdea: "Get New Idea",
-            addIdea: "Add Your Idea",
-            hideForm: "Hide Form",
             share: "Share",
             shareIdea: "Share Idea",
             favorite: "Favorite",
             inFavorites: "In Favorites",
             addToFavorites: "Add to Favorites",
-            removeFromFavorites: "Remove from Favorites"
+            removeFromFavorites: "Remove from Favorites",
+            shareViaTelegram: "Share via Telegram",
+            shareViaWhatsapp: "Share via WhatsApp",
+            shareViaTwitter: "Share via Twitter",
         },
         form: {
-            title: "Add New Idea",
-            ideaTitle: "Idea Title",
-            description: "Description",
             authorName: "Your Name",
-            submit: "Add Idea"
         },
         stats: {
             totalIdeas: "Total Ideas",
@@ -101,4 +97,6 @@ export const translations = {
         },
         loading: "Generating magic..."
     }
-}; 
+} as const;
+
+export type Language = keyof typeof translations;

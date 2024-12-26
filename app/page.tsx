@@ -1,6 +1,5 @@
 import { headers } from 'next/headers';
 import IdeaGenerator from '@/components/IdeaGenerator';
-import { translations } from '@/app/translations';
 import { Suspense } from 'react';
 import { LoadingSpinner } from '@/components/ui/loading-spinner';
 import type { Language } from '@/types';
@@ -18,22 +17,18 @@ const getInitialIdea = async () => {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
     const url = new URL('/api/generate-idea', baseUrl);
-    
+
     const response = await fetch(url.toString(), {
       cache: 'no-store',
-      next: { revalidate: 0 },
       headers: {
         'Accept': 'application/json',
-        'Cache-Control': 'no-cache, no-store, must-revalidate',
-        'Pragma': 'no-cache',
-        'Expires': '0',
       },
     });
-    
+
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    
+
     return await response.json();
   } catch (error) {
     console.error('Error fetching initial idea:', error);
@@ -61,8 +56,8 @@ export default async function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-100 via-purple-100 to-pink-100">
       <Suspense fallback={<LoadingSpinner />}>
-        <IdeaGenerator 
-          initialIdea={initialIdea} 
+        <IdeaGenerator
+          initialIdea={initialIdea}
           initialLang={initialLang}
         />
       </Suspense>

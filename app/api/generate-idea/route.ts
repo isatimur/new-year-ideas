@@ -12,17 +12,17 @@ export async function GET(request: Request) {
     const cost = searchParams.get('cost');
     const funFactor = searchParams.get('funFactor');
 
-    // Filter ideas based on criteria
-    const filteredIdeas = ideas.filter(idea => {
-      const matchesDifficulty = difficulty === 'all' || 
-                               idea.difficulty.toString() === difficulty;
-      const matchesCost = cost === 'all' || 
-                         idea.cost.toString() === cost;
-      const matchesFunFactor = funFactor === 'all' || 
-                              idea.funFactor.toString() === funFactor;
+    let filteredIdeas = ideas;
 
-      return matchesDifficulty && matchesCost && matchesFunFactor;
-    });
+    if (difficulty && difficulty !== 'all') {
+      filteredIdeas = filteredIdeas.filter(idea => idea.difficulty === Number(difficulty));
+    }
+    if (cost && cost !== 'all') {
+      filteredIdeas = filteredIdeas.filter(idea => idea.cost === Number(cost));
+    }
+    if (funFactor && funFactor !== 'all') {
+      filteredIdeas = filteredIdeas.filter(idea => idea.funFactor === Number(funFactor));
+    }
 
     if (filteredIdeas.length === 0) {
       return NextResponse.json(
@@ -33,7 +33,7 @@ export async function GET(request: Request) {
 
     const randomIndex = Math.floor(Math.random() * filteredIdeas.length);
     const randomIdea = filteredIdeas[randomIndex];
-    
+
     const headers = {
       'Cache-Control': 'no-store, must-revalidate',
       'Pragma': 'no-cache',
