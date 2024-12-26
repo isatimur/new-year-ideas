@@ -71,7 +71,7 @@ export function Footer({ lang }: { lang: Language }) {
       authorTitle: "Разработчик & Дизайнер",
       socialLinks: "Социальные сети",
       emailMe: "Написать письмо",
-      sourceCode: "Исходны�� код"
+      sourceCode: "Исходный код"
     }
   };
 
