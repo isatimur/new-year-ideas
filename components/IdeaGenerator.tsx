@@ -54,6 +54,11 @@ export default function IdeaGenerator({ initialIdea, initialLang }: IdeaGenerato
       const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
       const url = new URL('/api/generate-idea', baseUrl);
       
+      // Add filters to URL params
+      url.searchParams.set('difficulty', difficultyFilter);
+      url.searchParams.set('cost', costFilter);
+      url.searchParams.set('funFactor', funFactorFilter);
+      
       const response = await fetch(url, {
         headers: {
           'Accept': 'application/json',
@@ -63,24 +68,19 @@ export default function IdeaGenerator({ initialIdea, initialLang }: IdeaGenerato
       });
 
       if (!response.ok) {
+        if (response.status === 404) {
+          // Handle no matching ideas
+          console.warn('No matching ideas found with current filters');
+          return;
+        }
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       const newIdea = await response.json();
-
-      if (isIdeaMatchingFilters(newIdea, {
-        difficulty: difficultyFilter,
-        cost: costFilter,
-        funFactor: funFactorFilter,
-      })) {
-        addToHistory(newIdea);
-        generateConfetti();
-      } else {
-        generateIdea(); // Try again if the idea doesn't match the filters
-      }
+      addToHistory(newIdea);
+      generateConfetti();
     } catch (error) {
       console.error('Error fetching idea:', error);
-      // Handle error state...
     } finally {
       setIsLoading(false);
     }

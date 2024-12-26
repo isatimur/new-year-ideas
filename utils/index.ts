@@ -25,16 +25,4 @@ export function shareIdea(idea: Idea, lang: Language) {
   const shareText = `Check out this New Year's celebration idea: ${idea.title[lang]} - ${idea.description[lang]}`;
   const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
   window.open(shareUrl, '_blank');
-}
-
-export function isIdeaMatchingFilters(idea: Idea, filters: {
-  difficulty: string;
-  cost: string;
-  funFactor: string;
-}) {
-  return (
-    (filters.difficulty === 'all' || idea.difficulty.toString() === filters.difficulty) &&
-    (filters.cost === 'all' || idea.cost.toString() === filters.cost) &&
-    (filters.funFactor === 'all' || idea.funFactor.toString() === filters.funFactor)
-  );
 } 
