@@ -2,25 +2,33 @@
 
 import { usePathname, useSearchParams } from 'next/navigation';
 import Script from 'next/script';
+import { Suspense } from 'react';
 import { useEffect } from 'react';
 
-export function Analytics() {
+function AnalyticsContent() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
   useEffect(() => {
-    if (typeof window.gtag !== 'undefined') {
-      window.gtag('config', process.env.NEXT_PUBLIC_GA_ID, {
-        page_path: pathname + searchParams.toString(),
+    if (!GA_ID) return;
+    
+    const handleRouteChange = (url: string) => {
+      window.gtag('config', GA_ID, {
+        page_path: url,
       });
-    }
-  }, [pathname, searchParams]);
+    };
+
+    handleRouteChange(pathname + searchParams.toString());
+  }, [pathname, searchParams, GA_ID]);
+
+  if (!GA_ID) return null;
 
   return (
     <>
       <Script
         strategy="afterInteractive"
-        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+        src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
       />
       <Script
         id="gtag-init"
@@ -30,10 +38,20 @@ export function Analytics() {
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
+            gtag('config', '${GA_ID}', {
+              page_path: window.location.pathname,
+            });
           `,
         }}
       />
     </>
+  );
+}
+
+export function Analytics() {
+  return (
+    <Suspense fallback={null}>
+      <AnalyticsContent />
+    </Suspense>
   );
 } 

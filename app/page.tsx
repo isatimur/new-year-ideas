@@ -16,8 +16,8 @@ const getInitialIdea = async () => {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
     const url = new URL('/api/generate-idea', baseUrl);
     
-    const response = await fetch(url, {
-      cache: 'no-store',
+    const response = await fetch(url.toString(), {
+      next: { revalidate: 0 }, // Disable caching
       headers: {
         'Accept': 'application/json',
       },
@@ -27,8 +27,7 @@ const getInitialIdea = async () => {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     
-    const data = await response.json();
-    return data;
+    return await response.json();
   } catch (error) {
     console.error('Error fetching initial idea:', error);
     return {
