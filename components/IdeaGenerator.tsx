@@ -18,7 +18,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { translations } from '@/app/translations'
 import { Footer } from '@/components/ui/footer'
 import { useIdeas } from '@/hooks/useIdeas'
-import { generateConfetti, shareIdea, isIdeaMatchingFilters } from '@/utils'
+import { generateConfetti, shareIdea } from '@/utils'
 import { storage } from '@/utils/storage'
 import { DIFFICULTY_LEVELS, COST_LEVELS, FUN_LEVELS, SNOWFALL_INTERVAL } from '@/constants'
 import type { Idea, Language } from '@/types'
