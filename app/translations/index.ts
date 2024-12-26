@@ -1,6 +1,7 @@
 export const translations = {
     ru: {
         title: "Волшебный генератор новогодних идей",
+        subtitle: "Генерируйте новые идеи для Нового года",
         difficulty: "Сложность",
         cost: "Стоимость",
         funFactor: "Веселье",
@@ -51,6 +52,7 @@ export const translations = {
     },
     en: {
         title: "Magic New Year's Ideas Generator",
+        subtitle: "Generate new ideas for the New Year",
         difficulty: "Difficulty",
         cost: "Cost",
         funFactor: "Fun Factor",
