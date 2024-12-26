@@ -11,15 +11,22 @@ function getInitialLanguage(): Language {
   return acceptLanguage.includes('ru') ? 'ru' : 'en';
 }
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 const getInitialIdea = async () => {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
     const url = new URL('/api/generate-idea', baseUrl);
     
     const response = await fetch(url.toString(), {
-      next: { revalidate: 0 }, // Disable caching
+      cache: 'no-store',
+      next: { revalidate: 0 },
       headers: {
         'Accept': 'application/json',
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0',
       },
     });
     

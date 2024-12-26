@@ -53,11 +53,13 @@ export default function IdeaGenerator({ initialIdea, initialLang }: IdeaGenerato
     try {
       const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
       const url = new URL('/api/generate-idea', baseUrl);
-
+      
       const response = await fetch(url, {
         headers: {
           'Accept': 'application/json',
         },
+        cache: 'no-store',
+        next: { revalidate: 0 },
       });
 
       if (!response.ok) {
