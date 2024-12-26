@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   title: "New Year's Ideas Generator | Fun Holiday Activities",
   description: "Generate creative and fun ideas for New Year's celebrations. Find activities for all budgets and difficulty levels.",
   keywords: "New Year ideas, holiday activities, celebration ideas, party planning",
-  authors: [{ name: "Timur Isachenko", url: "https://github.com/timursaurus" }],
+  authors: [{ name: "Timur Isachenko", url: "https://timurisa.com" }],
   creator: "Timur Isachenko",
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"),
   openGraph: {
@@ -45,10 +45,6 @@ export const metadata: Metadata = {
       height: 630,
       alt: "New Year's Ideas Generator",
     }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    creator: "@timursaurus",
   },
   icons: {
     icon: "/favicon.ico",
