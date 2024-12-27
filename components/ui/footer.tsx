@@ -1,4 +1,4 @@
-import { Heart, Github, Linkedin, Mail } from 'lucide-react';
+import { Heart, Github, Linkedin, Mail, Globe } from 'lucide-react';
 import { Button } from './button';
 import type { Language } from '@/types';
 
@@ -8,18 +8,30 @@ const SnakeSvg = () => (
     className="w-24 h-24 text-blue-600 opacity-50"
     fill="currentColor"
   >
-    <path d="M30,50 Q40,30 50,50 T70,50 Q80,70 90,50" 
-          className="animate-[wave_3s_ease-in-out_infinite]"
-          strokeWidth="4"
-          stroke="currentColor"
-          fill="none"/>
-    <circle cx="85" cy="45" r="3"/> {/* Eye */}
-    <path d="M88,45 L92,45" strokeWidth="2" stroke="currentColor"/> {/* Tongue */}
-    <path d="M30,50 Q25,60 20,50 Q15,40 10,50" 
-          className="animate-[wave_3s_ease-in-out_infinite]"
-          strokeWidth="4"
-          stroke="currentColor"
-          fill="none"/> {/* Tail */}
+    <g className="animate-[wave_3s_ease-in-out_infinite]">
+      {/* Main body */}
+      <path
+        d="M30,50 Q40,30 50,50 T70,50 Q80,70 90,50"
+        strokeWidth="4"
+        stroke="currentColor"
+        fill="none"
+      />
+      <path
+        d="M98,48 L88,48"
+        strokeWidth="2"
+        stroke="red"
+      />{/* Eye */}
+      <circle cx="91" cy="48" r="4" />
+      {/* Tongue */}
+
+      {/* Tail */}
+      <path
+        d="M30,50 Q25,60 20,50 Q15,40 10,50"
+        strokeWidth="4"
+        stroke="currentColor"
+        fill="none"
+      />
+    </g>
   </svg>
 );
 
@@ -30,20 +42,20 @@ const ChristmasTreeSvg = () => (
     fill="currentColor"
   >
     <path d="M50,10 L70,40 H60 L75,60 H55 L65,80 H35 L45,60 H25 L40,40 H30 L50,10"
-          className="animate-[pulse_2s_ease-in-out_infinite]"/>
-    <rect x="45" y="80" width="10" height="10" fill="brown"/> {/* Trunk */}
+      className="animate-[pulse_2s_ease-in-out_infinite]" />
+    <rect x="45" y="80" width="10" height="10" fill="brown" /> {/* Trunk */}
     {/* Decorations */}
-    <circle cx="50" cy="20" r="2" fill="red" className="animate-ping"/>
-    <circle cx="40" cy="40" r="2" fill="gold" className="animate-ping"/>
-    <circle cx="60" cy="40" r="2" fill="red" className="animate-ping"/>
-    <circle cx="45" cy="60" r="2" fill="gold" className="animate-ping"/>
-    <circle cx="55" cy="60" r="2" fill="red" className="animate-ping"/>
+    <circle cx="50" cy="20" r="2" fill="red" className="animate-ping" />
+    <circle cx="40" cy="40" r="2" fill="gold" className="animate-ping" />
+    <circle cx="60" cy="40" r="2" fill="red" className="animate-ping" />
+    <circle cx="45" cy="60" r="2" fill="gold" className="animate-ping" />
+    <circle cx="55" cy="60" r="2" fill="red" className="animate-ping" />
   </svg>
 );
 
 export function Footer({ lang }: { lang: Language }) {
   const year = new Date().getFullYear();
-  
+
   const text = {
     en: {
       madeWith: "Made with",
@@ -77,12 +89,17 @@ export function Footer({ lang }: { lang: Language }) {
 
   const socialLinks = [
     {
+      icon: Globe,
+      href: "https://timurisa.com",
+      label: "Website"
+    },
+    {
       icon: Github,
       href: "https://github.com/isatimur/new-year-ideas",
       label: "GitHub"
     },
     {
-      icon: Linkedin,   
+      icon: Linkedin,
       href: "https://www.linkedin.com/in/timur-isachenko/",
       label: "LinkedIn"
     },
@@ -129,8 +146,8 @@ export function Footer({ lang }: { lang: Language }) {
                 size="sm"
                 asChild
               >
-                <a 
-                  href="https://github.com/isatimur/new-year-ideas" 
+                <a
+                  href="https://github.com/isatimur/new-year-ideas"
                   target="_blank"
                   rel="noopener noreferrer"
                 >

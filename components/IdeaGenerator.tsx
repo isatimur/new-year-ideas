@@ -13,7 +13,6 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { translations } from '@/app/translations/index'
 import { Footer } from '@/components/ui/footer'
 import { useIdeas } from '@/hooks/useIdeas'
@@ -21,7 +20,7 @@ import { generateConfetti, shareIdea } from '@/utils'
 import { storage } from '@/utils/storage'
 import { DIFFICULTY_LEVELS, COST_LEVELS, FUN_LEVELS, SNOWFALL_INTERVAL } from '@/constants'
 import type { Idea, Language } from '@/types'
-import { shareServices } from '@/utils'
+import { ShareButtons } from '@/components/share-buttons'
 
 interface IdeaGeneratorProps {
   initialIdea: Idea;
@@ -238,14 +237,14 @@ export default function IdeaGenerator({ initialIdea, initialLang }: IdeaGenerato
 
         <main className="space-y-8">
           <AnimatePresence mode="wait">
-            <motion.div
+            <motion.div 
               key={currentIdea.title[lang]}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.5 }}
-              className="bg-white/80 backdrop-blur-sm rounded-xl shadow-xl overflow-hidden"
-            >
+              className="bg-white/80 backdrop-blur-sm rounded-xl shadow-xl"
+            > 
               <Card className="mb-6 overflow-hidden transform transition-all hover:scale-[1.01] duration-200">
                 <CardHeader className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white p-6">
                   <CardTitle className="text-3xl font-bold tracking-tight">
@@ -297,83 +296,24 @@ export default function IdeaGenerator({ initialIdea, initialLang }: IdeaGenerato
                     </div>
                   </div>
                 </CardContent>
-                <CardFooter className="flex flex-wrap justify-between p-6 bg-gray-50/80 backdrop-blur-sm gap-4">
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Button
-                          onClick={() => toggleFavorite(currentIdea.id)}
-                          className={`flex items-center gap-2 transition-all ${favoriteIdeas.includes(currentIdea.id)
-                            ? 'bg-red-500 hover:bg-red-600 text-white'
-                            : 'bg-white hover:bg-gray-100 text-gray-700 border border-gray-200'
-                            }`}
-                          size="lg"
-                        >
-                          <Heart className={`w-5 h-5 ${favoriteIdeas.includes(currentIdea.id) ? 'text-white' : 'text-red-500'
-                            }`} />
-                          {favoriteIdeas.includes(currentIdea.id) ? t.buttons.inFavorites : t.buttons.favorite}
-                        </Button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>{favoriteIdeas.includes(currentIdea.id) ? t.buttons.removeFromFavorites : t.buttons.addToFavorites}</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-
-                  <div className="flex gap-2">
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Button
-                            onClick={() => shareIdea(currentIdea, lang, 'telegram')}
-                            className={`flex items-center gap-2 text-white ${shareServices.telegram.className}`}
-                            size="lg"
-                          >
-                            <Send className="w-5 h-5" />
-                            Telegram
-                          </Button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>{t.buttons.shareViaTelegram}</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Button
-                            onClick={() => shareIdea(currentIdea, lang, 'whatsapp')}
-                            className={`flex items-center gap-2 text-white ${shareServices.whatsapp.className}`}
-                            size="lg"
-                          >
-                            <MessageCircle className="w-5 h-5" />
-                            WhatsApp
-                          </Button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>{t.buttons.shareViaWhatsapp}</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Button
-                            onClick={() => shareIdea(currentIdea, lang, 'twitter')}
-                            className={`flex items-center gap-2 text-white ${shareServices.twitter.className}`}
-                            size="lg"
-                          >
-                            <Share2 className="w-5 h-5" />
-                            Twitter
-                          </Button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>{t.buttons.shareViaTwitter}</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
+                <CardFooter className="flex flex-wrap justify-end p-6 bg-white-50/80 backdrop-blur-sm gap-4">
+                  <div className="flex justify-between items-center mt-4">
+                    <ShareButtons 
+                      title={currentIdea.title[lang]}
+                      text={`${currentIdea.title[lang]}: ${currentIdea.description[lang]}`}
+                    />
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="rounded-full"
+                      onClick={() => toggleFavorite(currentIdea.id)}
+                    >
+                      {favoriteIdeas.includes(currentIdea.id) ? (
+                        <Heart className="h-5 w-5 fill-current text-red-500" />
+                      ) : (
+                        <Heart className="h-5 w-5 text-gray-400" />
+                      )}
+                    </Button>
                   </div>
                 </CardFooter>
               </Card>
